@@ -10,11 +10,13 @@ This folder contains the Python FastAPI backend for CO2 emissions predictions.
 pip install -r requirements.txt
 ```
 
-2. Train the model (if co2_model.pkl doesn't exist):
+2. **IMPORTANT: Train the model first** (generates co2_model.pkl ~185MB):
 
 ```bash
 python model.py
 ```
+
+This will train a Random Forest model on emissions data and save it as `co2_model.pkl`. The model file is excluded from git due to its size (184MB), so you must generate it locally before running the API.
 
 3. Start the API server:
 
