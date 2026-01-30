@@ -15,7 +15,7 @@ export default function Landing() {
     >
       {/* Subtle grid background */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.08]"
         style={{
           backgroundImage: `linear-gradient(#58a6ff 1px, transparent 1px),
                             linear-gradient(90deg, #58a6ff 1px, transparent 1px)`,
@@ -43,7 +43,7 @@ export default function Landing() {
       </motion.p>
 
       <motion.div
-        className="mt-12 relative z-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
+        className="mt-12 relative z-10 flex justify-center"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.6, duration: 0.6 }}
@@ -54,13 +54,6 @@ export default function Landing() {
                      hover:bg-blue-400 transition-colors focus:outline-none focus:ring-2 focus:ring-industrial-accent focus:ring-offset-2 focus:ring-offset-industrial-dark"
         >
           Start Simulation
-        </Link>
-        <Link
-          to="/demo"
-          className="inline-flex items-center gap-2 px-6 py-3 border-2 border-industrial-success/50 text-industrial-success font-medium rounded-lg
-                     hover:bg-industrial-success/10 transition-colors"
-        >
-          Demo Mode (2 min)
         </Link>
       </motion.div>
     </motion.div>
