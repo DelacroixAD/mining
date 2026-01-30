@@ -6,21 +6,21 @@ import { Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { useCursorPull } from './hooks/useCursorPull';
 
-import Landing from './pages/Landing';
-import ScenarioSelection from './pages/ScenarioSelection';
-import DecisionSimulator from './pages/DecisionSimulator';
-import Tradeoff from './pages/Tradeoff';
-import Timeline from './pages/Timeline';
-import Comparison from './pages/Comparison';
-import Summary from './pages/Summary';
-import Demo from './pages/Demo';
+import Landing from "./pages/Landing";
+import ScenarioSelection from "./pages/ScenarioSelection";
+import DecisionSimulator from "./pages/DecisionSimulator";
+import Tradeoff from "./pages/Tradeoff";
+import Timeline from "./pages/Timeline";
+import Comparison from "./pages/Comparison";
+import Summary from "./pages/Summary";
+import Demo from "./pages/Demo";
 
 // Shared simulation state (no Redux)
 const defaultSimState = {
   scenario: null,
   oreQuality: 50,
   processingSpeed: 50,
-  energySource: 'grid',
+  energySource: "grid",
   impact: null,
   tradeoffLevel: 0.5,
   timelineYears: 0,
@@ -47,13 +47,19 @@ export default function App() {
         <Route
           path="/scenario"
           element={
-            <ScenarioSelection simState={simState} updateSimState={updateSimState} />
+            <ScenarioSelection
+              simState={simState}
+              updateSimState={updateSimState}
+            />
           }
         />
         <Route
           path="/simulator"
           element={
-            <DecisionSimulator simState={simState} updateSimState={updateSimState} />
+            <DecisionSimulator
+              simState={simState}
+              updateSimState={updateSimState}
+            />
           }
         />
         <Route

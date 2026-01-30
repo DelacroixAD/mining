@@ -5,6 +5,9 @@ node_modules/
 # env
 .env
 
+# Large ML model files (train locally using model.py)
+python-api/*.pkl
+
 # build
 dist/
 build/

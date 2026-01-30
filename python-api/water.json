@@ -1,0 +1,26 @@
+{
+  "Bulgaria":{
+    "water_used_per_ton_m3":0.0074315803,
+    "pollution_index":0.8
+  },
+  "Czech Republic":{
+    "water_used_per_ton_m3":1.1773754965,
+    "pollution_index":0.5
+  },
+  "Germany":{
+    "water_used_per_ton_m3":6.9618341926,
+    "pollution_index":0.7
+  },
+  "Hungary":{
+    "water_used_per_ton_m3":4.264,
+    "pollution_index":0.2
+  },
+  "Poland":{
+    "water_used_per_ton_m3":7.4382223445,
+    "pollution_index":0.65
+  },
+  "Romania":{
+    "water_used_per_ton_m3":1.4954270808,
+    "pollution_index":0.275
+  }
+}
