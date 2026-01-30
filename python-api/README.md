@@ -5,16 +5,19 @@ This folder contains the Python FastAPI backend for CO2 emissions predictions.
 ## Setup
 
 1. Install Python dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 2. Train the model (if co2_model.pkl doesn't exist):
+
 ```bash
 python model.py
 ```
 
 3. Start the API server:
+
 ```bash
 python -m uvicorn app:app --reload --port 8000
 ```
@@ -24,6 +27,7 @@ python -m uvicorn app:app --reload --port 8000
 **POST** `http://127.0.0.1:8000/predict`
 
 ### Request Body:
+
 ```json
 {
   "year": 2024,
@@ -36,6 +40,7 @@ python -m uvicorn app:app --reload --port 8000
 ```
 
 ### Response:
+
 ```json
 {
   "predicted_CO2_Mt": 0.045,
