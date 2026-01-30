@@ -24,3 +24,27 @@ input[type="range"] {
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
+
+/* Cursor-pull button effect for all interactive elements */
+button,
+a[class*="px"],
+a[class*="py"],
+[role="button"],
+input[type="button"],
+input[type="submit"],
+.cursor-pull {
+  position: relative;
+  transition: transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --pull-x: 0;
+  --pull-y: 0;
+}
+
+button:hover,
+a[class*="px"]:hover,
+a[class*="py"]:hover,
+[role="button"]:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+.cursor-pull:hover {
+  transform: translate(var(--pull-x), var(--pull-y));
+}

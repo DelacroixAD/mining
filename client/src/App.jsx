@@ -4,6 +4,7 @@
 import { useState, useCallback } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { useCursorPull } from './hooks/useCursorPull';
 
 import Landing from './pages/Landing';
 import ScenarioSelection from './pages/ScenarioSelection';
@@ -28,6 +29,7 @@ const defaultSimState = {
 
 export default function App() {
   const [simState, setSimState] = useState(defaultSimState);
+  useCursorPull(8); // Enable cursor-pull effect globally
 
   const updateSimState = useCallback((updates) => {
     setSimState((prev) => ({ ...prev, ...updates }));
