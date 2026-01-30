@@ -17,9 +17,9 @@ from sklearn.model_selection import train_test_split, cross_val_score
 # =========================
 # 2. LOAD DATA
 # =========================
-df = pd.read_csv(
-    r"D:\Codes\vscode\vibeathon\emissions_high_granularity.csv"
-)
+import os
+csv_path = os.path.join(os.path.dirname(__file__), "emissions_high_granularity.csv")
+df = pd.read_csv(csv_path)
 
 print("Initial shape:", df.shape)
 print("\nColumns:", df.columns.tolist())
@@ -144,7 +144,8 @@ print(f"R²  : {r2:.4f}")
 # =========================
 # 14. WATER IMPACT FUNCTION (INFERENCE TIME)
 # =========================
-with open("water.json", "r") as f:
+water_json_path = os.path.join(os.path.dirname(__file__), "water.json")
+with open(water_json_path, "r") as f:
     water_by_country = json.load(f)
 
 def compute_water_impact(country, production_value):
@@ -266,7 +267,8 @@ print(f"  Sustainability Score: {result['sustainability_score']:.3f} (0=best, 1=
 # =========================
 import joblib
 
-joblib.dump(model, "co2_model.pkl")
+model_path = os.path.join(os.path.dirname(__file__), "co2_model.pkl")
+joblib.dump(model, model_path)
 print("\n✅ Model saved as co2_model.pkl")
 
 print("\n✅ MODEL READY FOR DEPLOYMENT")
