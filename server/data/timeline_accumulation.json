@@ -1,0 +1,10 @@
+{
+  "description": "Long-term accumulation factors by year (annualized impact multiplier)",
+  "source": "Simplified model: cumulative effect + degradation curve",
+  "data": [
+    { "years": 0, "accumulationFactor": 1.0 },
+    { "years": 10, "accumulationFactor": 8.5 },
+    { "years": 50, "accumulationFactor": 38 },
+    { "years": 100, "accumulationFactor": 72 }
+  ]
+}

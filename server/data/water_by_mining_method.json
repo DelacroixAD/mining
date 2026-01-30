@@ -1,0 +1,9 @@
+{
+  "description": "Water use intensity by mining/processing method (m³ per tonne ore equivalent)",
+  "source": "Typical ranges: open-pit 1–3, underground 0.5–1.5, smelting 2–5",
+  "data": [
+    { "method": "open-pit", "waterPerTonnesOre": 2.2, "runoffRisk": 0.85 },
+    { "method": "underground", "waterPerTonnesOre": 1.0, "runoffRisk": 0.45 },
+    { "method": "smelting", "waterPerTonnesOre": 3.5, "runoffRisk": 0.70 }
+  ]
+}

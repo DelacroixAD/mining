@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-industrial-dark text-gray-200 font-sans antialiased;
+  min-height: 100vh;
+}
+
+/* Custom range slider styling */
+input[type="range"] {
+  @apply accent-industrial-accent;
+}
+
+/* Prevent layout shift on number animations */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}

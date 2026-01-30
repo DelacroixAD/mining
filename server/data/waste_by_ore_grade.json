@@ -1,0 +1,12 @@
+{
+  "description": "Waste rock and tailings per unit metal (lower grade = more waste)",
+  "source": "Waste factor scales inversely with ore grade (grade % → waste multiplier)",
+  "data": [
+    { "oreGradePct": 100, "wasteMultiplier": 0.3, "tailingsPerTonnesOre": 0.4 },
+    { "oreGradePct": 75, "wasteMultiplier": 0.5, "tailingsPerTonnesOre": 0.6 },
+    { "oreGradePct": 50, "wasteMultiplier": 0.85, "tailingsPerTonnesOre": 1.0 },
+    { "oreGradePct": 25, "wasteMultiplier": 1.4, "tailingsPerTonnesOre": 1.5 },
+    { "oreGradePct": 10, "wasteMultiplier": 2.2, "tailingsPerTonnesOre": 2.2 },
+    { "oreGradePct": 0, "wasteMultiplier": 3.0, "tailingsPerTonnesOre": 3.0 }
+  ]
+}

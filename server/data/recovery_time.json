@@ -1,0 +1,11 @@
+{
+  "description": "Typical ecosystem recovery time (years) by damage level",
+  "source": "Literature ranges: light 5–15y, moderate 15–40y, severe 40–100+y",
+  "data": [
+    { "damageScore": 0, "recoveryYearsMin": 0, "recoveryYearsMax": 5 },
+    { "damageScore": 0.25, "recoveryYearsMin": 5, "recoveryYearsMax": 15 },
+    { "damageScore": 0.5, "recoveryYearsMin": 15, "recoveryYearsMax": 35 },
+    { "damageScore": 0.75, "recoveryYearsMin": 35, "recoveryYearsMax": 60 },
+    { "damageScore": 1.0, "recoveryYearsMin": 60, "recoveryYearsMax": 120 }
+  ]
+}

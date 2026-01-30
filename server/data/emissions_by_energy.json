@@ -1,0 +1,11 @@
+{
+  "description": "CO₂ emission factors by energy source (kg CO₂ per kWh equivalent, normalized to grid=1)",
+  "source": "Industry-typical ranges for mining/metallurgy",
+  "units": "relative to grid mix",
+  "data": [
+    { "energySource": "coal", "co2Factor": 1.85, "label": "Coal" },
+    { "energySource": "gas", "co2Factor": 1.15, "label": "Natural gas" },
+    { "energySource": "grid", "co2Factor": 1.0, "label": "Grid mix" },
+    { "energySource": "renewable", "co2Factor": 0.12, "label": "Renewable" }
+  ]
+}
