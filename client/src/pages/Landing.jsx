@@ -1,8 +1,8 @@
 /**
  * Landing Page - Dark industrial theme, headline, Start Simulation CTA
  */
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function Landing() {
   return (
@@ -19,7 +19,7 @@ export default function Landing() {
         style={{
           backgroundImage: `linear-gradient(#58a6ff 1px, transparent 1px),
                             linear-gradient(90deg, #58a6ff 1px, transparent 1px)`,
-          backgroundSize: '48px 48px',
+          backgroundSize: "48px 48px",
         }}
       />
 
@@ -29,7 +29,7 @@ export default function Landing() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.6 }}
       >
-        Every industrial decision has a{' '}
+        Every industrial decision has a{" "}
         <span className="text-industrial-accent">long-term</span> impact.
       </motion.h1>
 
@@ -39,7 +39,8 @@ export default function Landing() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.6 }}
       >
-        Explore how mining and metallurgy choices affect land, water, and air—in real time.
+        Explore how mining and metallurgy choices affect land, water, and air—in
+        real time.
       </motion.p>
 
       <motion.div

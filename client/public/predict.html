@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainability Predictor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        input, select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .result-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .result-unit {
+            font-size: 0.9em;
+            color: #999;
+            margin-left: 5px;
+        }
+
+        .score-indicator {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .score-bar {
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(to right, #10b981 0%, #fbbf24 50%, #ef4444 100%);
+            border-radius: 15px;
+            position: relative;
+            margin: 15px 0;
+        }
+
+        .score-marker {
+            position: absolute;
+            top: -5px;
+            width: 4px;
+            height: 40px;
+            background: #333;
+            border-radius: 2px;
+            transition: left 0.5s ease;
+        }
+
+        .error {
+            background: #fee;
+            color: #c00;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            color: #667eea;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid, .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Sustainability Predictor</h1>
+        <p class="subtitle">Predict CO₂ emissions and water impact for mining operations</p>
+
+        <form id="predictionForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input type="number" id="year" name="year" value="2024" min="1900" max="2100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" name="country" required>
+                        <option value="">Select Country</option>
+                        <option value="Bulgaria">Bulgaria</option>
+                        <option value="Czech Republic">Czech Republic</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Romania">Romania</option>
+                        <option value="Other">Other (No water data)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="commodity">Commodity</label>
+                    <select id="commodity" name="commodity" required>
+                        <option value="">Select Commodity</option>
+                        <option value="Coal">Coal</option>
+                        <option value="Oil">Oil</option>
+                        <option value="Gas">Gas</option>
+                        <option value="Iron">Iron</option>
+                        <option value="Copper">Copper</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="production_value">Production Value</label>
+                    <input type="number" id="production_value" name="production_value" step="0.1" min="0" value="10.5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="production_unit">Production Unit</label>
+                    <select id="production_unit" name="production_unit" required>
+                        <option value="">Select Unit</option>
+                        <option value="Million tonnes/yr">Million tonnes/yr</option>
+                        <option value="Thousand barrels/day">Thousand barrels/day</option>
+                        <option value="Million cubic meters/yr">Million cubic meters/yr</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="parent_type">Parent Type</label>
+                    <select id="parent_type" name="parent_type" required>
+                        <option value="">Select Type</option>
+                        <option value="State-Owned">State-Owned</option>
+                        <option value="Private">Private</option>
+                        <option value="Public">Public</option>
+                        <option value="Joint Venture">Joint Venture</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" id="predictBtn">🔮 Predict Impact</button>
+        </form>
+
+        <div class="loading" id="loading">
+            <p>⏳ Calculating predictions...</p>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="results" id="results">
+            <h2>📊 Prediction Results</h2>
+            <div class="result-grid">
+                <div class="result-item">
+                    <div class="result-label">CO₂ Emissions</div>
+                    <div class="result-value" id="co2Value">-</div>
+                    <span class="result-unit">Mt CO₂</span>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-label">Water Usage</div>
+                    <div class="result-value" id="waterValue">-</div>
+                    <span class="result-unit">m³</span>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-label">Water Stress Index</div>
+                    <div class="result-value" id="stressValue">-</div>
+                    <span class="result-unit">(0-1 scale)</span>
+                </div>
+
+                <div class="result-item">
+                    <div class="result-label">Sustainability Score</div>
+                    <div class="result-value" id="scoreValue">-</div>
+                    <span class="result-unit">(0=best, 1=worst)</span>
+                </div>
+            </div>
+
+            <div class="score-indicator">
+                <strong>Overall Impact</strong>
+                <div class="score-bar">
+                    <div class="score-marker" id="scoreMarker"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9em; color: #666;">
+                    <span>🟢 Low Impact</span>
+                    <span>🟡 Medium</span>
+                    <span>🔴 High Impact</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/predict';
+
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const formData = {
+                year: parseInt(document.getElementById('year').value),
+                commodity: document.getElementById('commodity').value,
+                production_value: parseFloat(document.getElementById('production_value').value),
+                production_unit: document.getElementById('production_unit').value,
+                parent_type: document.getElementById('parent_type').value,
+                country: document.getElementById('country').value
+            };
+
+            // Show loading, hide results and errors
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('error').classList.remove('show');
+            document.getElementById('predictBtn').disabled = true;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // Display results
+                document.getElementById('co2Value').textContent = data.predicted_CO2_Mt.toFixed(4);
+                document.getElementById('waterValue').textContent = 
+                    data.water_used_m3 !== null ? data.water_used_m3.toFixed(4) : 'N/A';
+                document.getElementById('stressValue').textContent = 
+                    data.water_stress_index !== null ? data.water_stress_index.toFixed(2) : 'N/A';
+                document.getElementById('scoreValue').textContent = data.sustainability_score.toFixed(3);
+
+                // Update score marker position
+                const markerPosition = data.sustainability_score * 100;
+                document.getElementById('scoreMarker').style.left = `${markerPosition}%`;
+
+                // Show results
+                document.getElementById('results').classList.add('show');
+
+            } catch (error) {
+                console.error('Error:', error);
+                const errorDiv = document.getElementById('error');
+                errorDiv.textContent = `Error: ${error.message}. Make sure the API is running at ${API_URL}`;
+                errorDiv.classList.add('show');
+            } finally {
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('predictBtn').disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

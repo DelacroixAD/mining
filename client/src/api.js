@@ -49,6 +49,17 @@ export async function getExplanation(body) {
   return request('/explain', { method: 'POST', body: JSON.stringify(body) });
 }
 
+/** POST to Python ML API - Predict CO2 emissions with trained model */
+export async function predictWithMLModel(body) {
+  const response = await fetch('http://127.0.0.1:8000/predict', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!response.ok) throw new Error(`ML API Error: ${response.status}`);
+  return response.json();
+}
+
 /** POST /api/coach - AI Sustainability Coach: why harmful, 2–3 changes, before/after % */
 export async function getCoach(body) {
   return request('/coach', { method: 'POST', body: JSON.stringify(body) });
