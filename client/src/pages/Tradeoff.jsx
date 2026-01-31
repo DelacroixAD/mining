@@ -2,18 +2,18 @@
  * Tradeoff Screen - Profit (left) vs Sustainability (right) slider
  * Backend adjusts impact; visuals update smoothly
  */
-import { useEffect, useState, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { calculateTradeoff, getExplanation } from '../api';
-import EnvironmentVisual from '../components/EnvironmentVisual';
-import DamageScore from '../components/DamageScore';
+import { useEffect, useState, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { calculateTradeoff, getExplanation } from "../api";
+import EnvironmentVisual from "../components/EnvironmentVisual";
+import DamageScore from "../components/DamageScore";
 
 export default function Tradeoff({ simState, updateSimState }) {
   const { impact, tradeoffLevel } = simState;
   const [adjustedImpact, setAdjustedImpact] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [explanation, setExplanation] = useState('');
+  const [explanation, setExplanation] = useState("");
   const navigate = useNavigate();
 
   const sustainabilityLevel = tradeoffLevel; // 0 = profit, 1 = sustainability
@@ -43,17 +43,20 @@ export default function Tradeoff({ simState, updateSimState }) {
     const display = adjustedImpact ?? impact;
     if (!display) return;
     getExplanation({ impact: display })
-      .then((res) => setExplanation(res.explanation || ''))
-      .catch(() => setExplanation(''));
+      .then((res) => setExplanation(res.explanation || ""))
+      .catch(() => setExplanation(""));
   }, [adjustedImpact, impact]);
 
   const handleContinue = () => {
-    updateSimState({ impact: adjustedImpact ?? impact, tradeoffLevel: sustainabilityLevel });
-    navigate('/timeline');
+    updateSimState({
+      impact: adjustedImpact ?? impact,
+      tradeoffLevel: sustainabilityLevel,
+    });
+    navigate("/timeline");
   };
 
   if (!impact) {
-    navigate('/simulator');
+    navigate("/simulator");
     return null;
   }
 
@@ -64,21 +67,21 @@ export default function Tradeoff({ simState, updateSimState }) {
 
   return (
     <motion.div
-      className="min-h-screen bg-industrial-dark px-6 py-12"
+      className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-6 py-12 relative overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto text-center">
         <motion.h1
-          className="text-3xl md:text-4xl font-bold text-gray-100"
+          className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-100"
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
         >
           Profit vs sustainability
         </motion.h1>
         <motion.p
-          className="mt-2 text-industrial-muted"
+          className="mt-4 text-lg md:text-xl text-gray-300"
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
@@ -88,14 +91,16 @@ export default function Tradeoff({ simState, updateSimState }) {
 
         {/* Large slider */}
         <motion.div
-          className="mt-10 p-6 rounded-xl bg-industrial-panel border border-industrial-border"
+          className="mt-12 p-8 rounded-xl bg-industrial-panel border border-industrial-border"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="flex justify-between text-sm mb-2">
-            <span className="text-industrial-danger font-medium">Profit</span>
-            <span className="text-industrial-success font-medium">Sustainability</span>
+          <div className="flex justify-between text-base md:text-lg mb-4">
+            <span className="text-industrial-danger font-bold">Profit</span>
+            <span className="text-industrial-success font-bold">
+              Sustainability
+            </span>
           </div>
           <input
             type="range"
@@ -105,13 +110,13 @@ export default function Tradeoff({ simState, updateSimState }) {
             onChange={(e) =>
               updateSimState({ tradeoffLevel: Number(e.target.value) / 100 })
             }
-            className="w-full h-4 rounded-lg appearance-none cursor-pointer bg-industrial-border accent-industrial-accent"
+            className="w-full h-6 rounded-lg appearance-none cursor-pointer bg-industrial-border accent-industrial-accent"
           />
         </motion.div>
 
         {/* Visual + numbers */}
         <motion.div
-          className="mt-8 grid md:grid-cols-2 gap-6"
+          className="mt-10 grid md:grid-cols-2 gap-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -123,24 +128,33 @@ export default function Tradeoff({ simState, updateSimState }) {
                 <span className="text-industrial-muted">Updating…</span>
               </div>
             ) : (
-              <EnvironmentVisual
-                landDamage={landDamage}
-                waterPollution={waterPollution}
-                airPollution={airPollution}
-              />
+              <div className="overflow-hidden rounded-xl">
+                <EnvironmentVisual
+                  landDamage={landDamage}
+                  waterPollution={waterPollution}
+                  airPollution={airPollution}
+                />
+              </div>
             )}
           </div>
           <div className="flex flex-col justify-center p-4 rounded-lg bg-industrial-panel border border-industrial-border">
             {displayImpact.damageScore0to100 != null && (
               <div className="mb-3">
-                <DamageScore score={displayImpact.damageScore0to100} band={displayImpact.damageBand} label={displayImpact.damageLabel} size="sm" />
+                <DamageScore
+                  score={displayImpact.damageScore0to100}
+                  band={displayImpact.damageBand}
+                  label={displayImpact.damageLabel}
+                  size="sm"
+                />
               </div>
             )}
-            <p className="text-industrial-muted text-sm mb-3">Current impact</p>
-            <div className="space-y-2 tabular-nums">
+            <p className="text-industrial-muted text-base mb-3">
+              Current impact
+            </p>
+            <div className="space-y-3 tabular-nums">
               <motion.p
                 key={`co2-${displayImpact.co2Tonnes}`}
-                className="text-industrial-danger text-xl"
+                className="text-industrial-danger text-2xl md:text-3xl font-semibold"
                 initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.3 }}
@@ -149,7 +163,7 @@ export default function Tradeoff({ simState, updateSimState }) {
               </motion.p>
               <motion.p
                 key={`water-${displayImpact.waterCubicMeters}`}
-                className="text-industrial-accent text-xl"
+                className="text-industrial-accent text-2xl md:text-3xl font-semibold"
                 initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.3 }}
@@ -158,7 +172,7 @@ export default function Tradeoff({ simState, updateSimState }) {
               </motion.p>
               <motion.p
                 key={`waste-${displayImpact.wasteTonnes}`}
-                className="text-industrial-ore text-xl"
+                className="text-industrial-ore text-2xl md:text-3xl font-semibold"
                 initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.3 }}
@@ -166,28 +180,39 @@ export default function Tradeoff({ simState, updateSimState }) {
                 Waste: {displayImpact.wasteTonnes} tonnes
               </motion.p>
             </div>
-            {displayImpact.equivalents && (displayImpact.equivalents.waterText || displayImpact.equivalents.carsText) && (
-              <p className="text-xs text-gray-400 mt-2">
-                {displayImpact.equivalents.waterText && <span>{displayImpact.equivalents.waterText}. </span>}
-                {displayImpact.equivalents.carsText && <span>{displayImpact.equivalents.carsText}</span>}
-              </p>
-            )}
+            {displayImpact.equivalents &&
+              (displayImpact.equivalents.waterText ||
+                displayImpact.equivalents.carsText) && (
+                <p className="text-sm md:text-base text-gray-300 mt-4">
+                  {displayImpact.equivalents.waterText && (
+                    <span>{displayImpact.equivalents.waterText}. </span>
+                  )}
+                  {displayImpact.equivalents.carsText && (
+                    <span>{displayImpact.equivalents.carsText}</span>
+                  )}
+                </p>
+              )}
           </div>
         </motion.div>
 
         {explanation && (
           <motion.div
-            className="mt-6 p-4 rounded-lg bg-industrial-panel/80 border border-industrial-border text-sm text-gray-300"
+            className="mt-8 p-6 rounded-lg bg-industrial-panel/80 border border-industrial-border text-base md:text-lg text-gray-300"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <p className="text-industrial-muted text-xs uppercase tracking-wide mb-1">What this means</p>
+            <p className="text-industrial-muted text-sm md:text-base uppercase tracking-wide mb-2 font-semibold">
+              What this means
+            </p>
             <p>{explanation}</p>
           </motion.div>
         )}
 
         <div className="mt-10 flex justify-between">
-          <Link to="/simulator" className="text-industrial-muted hover:text-gray-200">
+          <Link
+            to="/simulator"
+            className="text-industrial-muted hover:text-gray-200"
+          >
             ← Back
           </Link>
           <button

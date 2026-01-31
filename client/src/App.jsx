@@ -1,10 +1,10 @@
 /**
  * Main app: routing and global simulation state
  */
-import { useState, useCallback } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
-import { useCursorPull } from './hooks/useCursorPull';
+import { useState, useCallback } from "react";
+import { Routes, Route } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { useCursorPull } from "./hooks/useCursorPull";
 
 import Landing from "./pages/Landing";
 import ScenarioSelection from "./pages/ScenarioSelection";

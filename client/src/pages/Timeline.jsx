@@ -2,11 +2,11 @@
  * Timeline Simulation - Now → 10y → 50y → 100y
  * Backend projects accumulation; frontend shows degradation over time
  */
-import { useEffect, useState, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { calculateTimeline, getExplanation } from '../api';
-import EnvironmentVisual from '../components/EnvironmentVisual';
+import { useEffect, useState, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { calculateTimeline, getExplanation } from "../api";
+import EnvironmentVisual from "../components/EnvironmentVisual";
 
 const YEARS_OPTIONS = [0, 10, 50, 100];
 
@@ -14,7 +14,7 @@ export default function Timeline({ simState, updateSimState }) {
   const { impact, timelineYears } = simState;
   const [projected, setProjected] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [explanation, setExplanation] = useState('');
+  const [explanation, setExplanation] = useState("");
   const [selectedYears, setSelectedYears] = useState(timelineYears);
   const navigate = useNavigate();
 
@@ -42,17 +42,20 @@ export default function Timeline({ simState, updateSimState }) {
     const display = projected ?? impact;
     if (!display) return;
     getExplanation({ impact: display, years: selectedYears })
-      .then((res) => setExplanation(res.explanation || ''))
-      .catch(() => setExplanation(''));
+      .then((res) => setExplanation(res.explanation || ""))
+      .catch(() => setExplanation(""));
   }, [projected, impact, selectedYears]);
 
   const handleContinue = () => {
-    updateSimState({ timelineYears: selectedYears, impact: projected ?? impact });
-    navigate('/comparison');
+    updateSimState({
+      timelineYears: selectedYears,
+      impact: projected ?? impact,
+    });
+    navigate("/comparison");
   };
 
   if (!impact) {
-    navigate('/simulator');
+    navigate("/simulator");
     return null;
   }
 
@@ -68,21 +71,21 @@ export default function Timeline({ simState, updateSimState }) {
 
   return (
     <motion.div
-      className="min-h-screen bg-industrial-dark px-6 py-12"
+      className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-6 py-12 relative overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto text-center">
         <motion.h1
-          className="text-3xl md:text-4xl font-bold text-gray-100"
+          className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-100"
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
         >
           Long-term projection
         </motion.h1>
         <motion.p
-          className="mt-2 text-industrial-muted"
+          className="mt-4 text-lg md:text-xl text-gray-300"
           initial={{ y: -10, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
@@ -92,54 +95,60 @@ export default function Timeline({ simState, updateSimState }) {
 
         {/* Timeline slider */}
         <motion.div
-          className="mt-10 p-6 rounded-xl bg-industrial-panel border border-industrial-border"
+          className="mt-12 p-8 rounded-xl bg-industrial-panel border border-industrial-border"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <label className="block text-sm font-medium text-gray-300 mb-4">
-            Time: {selectedYears === 0 ? 'Now' : `${selectedYears} years`}
+          <label className="block text-base md:text-lg font-medium text-gray-300 mb-6">
+            Time: {selectedYears === 0 ? "Now" : `${selectedYears} years`}
           </label>
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-3 flex-wrap">
             {YEARS_OPTIONS.map((y) => (
               <button
                 key={y}
                 type="button"
                 onClick={() => setSelectedYears(y)}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                className={`px-6 py-3 text-lg rounded-lg font-medium transition-colors ${
                   selectedYears === y
-                    ? 'bg-industrial-accent text-industrial-dark'
-                    : 'bg-industrial-border/50 text-gray-300 hover:bg-industrial-border'
+                    ? "bg-industrial-accent text-industrial-dark"
+                    : "bg-industrial-border/50 text-gray-300 hover:bg-industrial-border"
                 }`}
               >
-                {y === 0 ? 'Now' : `${y}y`}
+                {y === 0 ? "Now" : `${y}y`}
               </button>
             ))}
           </div>
         </motion.div>
 
         <motion.div
-          className="mt-8 grid md:grid-cols-2 gap-6"
+          className="mt-10 grid md:grid-cols-2 gap-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
           <div>
-            <p className="text-industrial-muted text-sm mb-2">Environment over time</p>
+            <p className="text-industrial-muted text-sm mb-2">
+              Environment over time
+            </p>
             {loading ? (
               <div className="min-h-[240px] flex items-center justify-center rounded-lg bg-industrial-panel border border-industrial-border">
                 <span className="text-industrial-muted">Calculating…</span>
               </div>
             ) : (
-              <EnvironmentVisual
-                landDamage={display.landDamage ?? 0}
-                waterPollution={display.waterPollution ?? 0}
-                airPollution={display.airPollution ?? 0}
-              />
+              <div className="overflow-hidden rounded-xl">
+                <EnvironmentVisual
+                  landDamage={display.landDamage ?? 0}
+                  waterPollution={display.waterPollution ?? 0}
+                  airPollution={display.airPollution ?? 0}
+                />
+              </div>
             )}
           </div>
           <div className="flex flex-col justify-center p-4 rounded-lg bg-industrial-panel border border-industrial-border">
-            <p className="text-industrial-muted text-sm mb-3">Projected impact</p>
+            <p className="text-industrial-muted text-sm mb-3">
+              Projected impact
+            </p>
             <div className="space-y-2 tabular-nums">
               <p className="text-industrial-danger text-xl">
                 CO₂: {display.co2Tonnes} t
@@ -161,17 +170,22 @@ export default function Timeline({ simState, updateSimState }) {
 
         {explanation && (
           <motion.div
-            className="mt-6 p-4 rounded-lg bg-industrial-panel/80 border border-industrial-border text-sm text-gray-300"
+            className="mt-8 p-6 rounded-lg bg-industrial-panel/80 border border-industrial-border text-base md:text-lg text-gray-300"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <p className="text-industrial-muted text-xs uppercase tracking-wide mb-1">Long-term impact</p>
+            <p className="text-industrial-muted text-sm md:text-base uppercase tracking-wide mb-2 font-semibold">
+              Long-term impact
+            </p>
             <p>{explanation}</p>
           </motion.div>
         )}
 
         <div className="mt-10 flex justify-between">
-          <Link to="/tradeoff" className="text-industrial-muted hover:text-gray-200">
+          <Link
+            to="/tradeoff"
+            className="text-industrial-muted hover:text-gray-200"
+          >
             ← Back
           </Link>
           <button
