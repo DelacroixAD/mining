@@ -63,11 +63,22 @@ export default function Landing() {
         }}
       />
 
-      <motion.h1
-        className="text-4xl md:text-6xl font-bold text-center text-gray-100 max-w-4xl relative z-10"
-        initial={{ y: 20, opacity: 0 }}
+      <motion.div
+        className="text-center relative z-10"
+        initial={{ y: 0, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.6 }}
+      >
+        <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 mb-28 leading-tight">
+          SustainMine
+        </h2>
+      </motion.div>
+
+      <motion.h1
+        className="text-5xl md:text-6xl lg:text-7xl font-bold text-center text-gray-100 max-w-6xl relative z-10 leading-relaxed"
+        initial={{ y: 0, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
       >
         Every industrial decision has a{" "}
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
@@ -77,10 +88,10 @@ export default function Landing() {
       </motion.h1>
 
       <motion.p
-        className="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl text-center relative z-10"
-        initial={{ y: 20, opacity: 0 }}
+        className="mt-8 text-xl md:text-2xl text-gray-300 max-w-4xl text-center relative z-10 leading-relaxed"
+        initial={{ y: 0, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.4, duration: 0.6 }}
+        transition={{ delay: 0.6, duration: 0.6 }}
       >
         Explore how mining and metallurgy choices affect land, water, and
         air—with <span className="text-blue-400">real-time ML predictions</span>
@@ -89,9 +100,9 @@ export default function Landing() {
 
       <motion.div
         className="mt-12 relative z-10 flex justify-center"
-        initial={{ y: 20, opacity: 0 }}
+        initial={{ y: 0, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6, duration: 0.6 }}
+        transition={{ delay: 0.8, duration: 0.6 }}
       >
         <Link
           to="/scenario"
