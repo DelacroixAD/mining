@@ -1,6 +1,6 @@
 # Mining & Metallurgy Sustainability Simulator
 
-An **AI-powered decision intelligence tool** that makes hidden environmental costs of mining and metallurgy visible, explainable, and avoidable. Built for hackathon impact: real-time damage score, AI Sustainability Coach, “What if everyone did this?” scaling, scenario save/compare, and a 2-minute Demo Mode for judges.
+An **AI-powered decision intelligence tool** that makes hidden environmental costs of mining and metallurgy visible, explainable, and avoidable. Built for hackathon impact: real-time damage score, AI Sustainability Coach, “What if everyone did this?” scaling, scenario save and compare.
 
 ## Problem statement
 
